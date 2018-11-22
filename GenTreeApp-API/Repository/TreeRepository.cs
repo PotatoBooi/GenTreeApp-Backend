@@ -10,7 +10,7 @@ using GenTreeApp_API.Models;
 
 namespace GenTreeApp_API.Repository
 {
-    public class TreeRepository : RepositoryBase<DbContext,Tree>, ITreeRepository
+    public class TreeRepository : RepositoryBase<TreeDbContext,Tree>, ITreeRepository
     {
         // TODO : create EF entities for DbContextClass
     }

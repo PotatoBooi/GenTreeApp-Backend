@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,13 +8,14 @@ namespace GenTreeApp_API.Models
 {
     public class Details
     {
-        public string UUID { get; set; }
-        public HashSet<Media> MediaList { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid UUID { get; set; }
+        public virtual ICollection<Media> MediaList { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Sex { get; set; }
-        public HashSet<Comment> CommentList { get; set; }
-        public HashSet<Event> EventList { get; set; }
+        public virtual ICollection<Comment> CommentList { get; set; }
+        public virtual ICollection<Event> EventList { get; set; }
 
     }
 }

@@ -18,9 +18,7 @@ namespace GenTreeApp_API.Controllers
         private readonly ITreeRepository _treeRepository;
         public ValuesController(ITreeRepository treeRepository)
         {
-            var test = new TestObjects();
-
-            trees = new List<Tree> { test.tree1 };
+          
             _treeRepository = treeRepository;
             
         }
@@ -37,7 +35,7 @@ namespace GenTreeApp_API.Controllers
         //}
         public IEnumerable<Tree> Get()
         {
-            return trees;
+            return new List<Tree>();
         }
       
 
