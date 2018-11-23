@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using GenTreeApp_API.Domain.Models;
@@ -32,7 +34,23 @@ namespace GenTreeApp_API.Domain.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            //configuring primary keys
+//            modelBuilder.Entity<Tree>().Property(t => t.UUID)
+//                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<User>().HasKey(u => u.UUID);
+            modelBuilder.Entity<User>().Property(u => u.Name).IsRequired().HasMaxLength(15);
+            modelBuilder.Entity<User>().Property(u => u.Password).IsRequired().HasMaxLength(20);
+            modelBuilder.Entity<Tree>().HasKey(u => u.UUID);
+            modelBuilder.Entity<Person>().HasKey(u => u.UUID);
+            modelBuilder.Entity<Relation>().HasKey(u => u.UUID);
+            modelBuilder.Entity<Event>().HasKey(u => u.UUID);
+            modelBuilder.Entity<Details>().HasKey(u => u.UUID);
+            modelBuilder.Entity<Media>().HasKey(u => u.UUID);
+            modelBuilder.Entity<Comment>().HasKey(u => u.UUID);
+            
+
         }
 
 
