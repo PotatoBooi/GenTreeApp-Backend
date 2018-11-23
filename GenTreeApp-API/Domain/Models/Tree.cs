@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
-namespace GenTreeApp_API.Models
+namespace GenTreeApp_API.Domain.Models
 {
-    public class Media
+
+    public class Tree
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public Guid UUID { get; set; }
+        public bool Editable { get; set; }
+        public virtual ICollection<Relation> Relations { get; set; }
+
     }
 }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace GenTreeApp_API.Repository
+namespace GenTreeApp_API.Domain.Repository
 {
     public interface IRepositoryBase<T>
     {

@@ -1,6 +1,7 @@
 using System;
-using GenTreeApp_API.Contracts;
-using GenTreeApp_API.Repository;
+using GenTreeApp_API.Domain.Contracts;
+using GenTreeApp_API.Domain.Repository;
+using GenTreeApp_API.MockObject;
 using Unity;
 
 namespace GenTreeApp_API
@@ -43,7 +44,8 @@ namespace GenTreeApp_API
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
-            container.RegisterType<ITreeRepository, TreeRepository>();
+            // container.RegisterType<ITreeRepository, TreeRepository>();
+            container.RegisterType<ITreeRepository, FakeTreeRepository>();
         }
     }
 }

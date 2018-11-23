@@ -1,11 +1,9 @@
-namespace GenTreeApp_API
-{
-    using GenTreeApp_API.Models;
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.ModelConfiguration.Conventions;
-    using System.Linq;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using GenTreeApp_API.Domain.Models;
 
+namespace GenTreeApp_API.Domain.Data
+{
     public class TreeDbContext : DbContext
     {
         // Your context has been configured to use a 'TreeDbContext' connection string from your application's 
@@ -23,7 +21,14 @@ namespace GenTreeApp_API
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         public virtual DbSet<Tree> Trees { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Relation> Relations { get; set; }
+        public virtual DbSet<Details> Details { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<Media> Media { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,3 +1,5 @@
+using GenTreeApp_API.Domain.Data;
+
 namespace GenTreeApp_API.Migrations
 {
     using System;
@@ -5,14 +7,14 @@ namespace GenTreeApp_API.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<GenTreeApp_API.TreeDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<TreeDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(GenTreeApp_API.TreeDbContext context)
+        protected override void Seed(TreeDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

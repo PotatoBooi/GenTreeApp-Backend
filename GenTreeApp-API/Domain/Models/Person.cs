@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
-namespace GenTreeApp_API.Models
+namespace GenTreeApp_API.Domain.Models
 {
-    public class Relation
+    public class Person
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UUID { get; set; }
-        public virtual ICollection<Person> Parents { get; set; }
-        public virtual Person Child { get; set; }
+        public virtual ICollection<Relation> RelationList{get; set;}
+        public virtual Details Details { get; set; }
+        
 
     }
 }

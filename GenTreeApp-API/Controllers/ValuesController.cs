@@ -5,9 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using GenTreeApp_API.Contracts;
+using GenTreeApp_API.Domain.Contracts;
+using GenTreeApp_API.Domain.Models;
 using GenTreeApp_API.MockObject;
-using GenTreeApp_API.Models;
 using Microsoft.Ajax.Utilities;
 
 namespace GenTreeApp_API.Controllers
