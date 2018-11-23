@@ -6,6 +6,8 @@ namespace GenTreeApp_API.Domain.Repository
 {
     public class TreeRepository : RepositoryBase<TreeDbContext,Tree>, ITreeRepository
     {
-        // TODO : create EF entities for DbContextClass
+        public TreeRepository(TreeDbContext entities) : base(entities)
+        {
+        }
     }
 }

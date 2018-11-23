@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace GenTreeApp_API.Domain.Repository
 {
-    public abstract class RepositoryBase<C, T> : IRepositoryBase<T> where T : class where C : DbContext, new()
+    public abstract class RepositoryBase<C, T> : IRepositoryBase<T> where T : class where C : DbContext
     {
+        public C Context { get; set; }
 
-        private C _entities = new C();
-        public C Context
+        protected RepositoryBase(C entities)
         {
-            get => _entities;
-            set => _entities = value;
+            Context = entities;
         }
 
         public void Create(T entity)

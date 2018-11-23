@@ -235,12 +235,21 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\TreesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Domain\Contracts\IDetailsRepository.cs" />
+    <Compile Include="Domain\Contracts\IPersonRepository.cs" />
+    <Compile Include="Domain\Contracts\IRelationRepository.cs" />
     <Compile Include="Domain\Contracts\IRepositoryWrapper.cs" />
     <Compile Include="Domain\Contracts\ITreeRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Domain\Contracts\IUserRepository.cs" />
     <Compile Include="Domain\DTOs\CreatePersonDto.cs" />
     <Compile Include="Domain\DTOs\PersonDetailDto.cs" />
+    <Compile Include="Domain\Repository\DetailsRepository.cs" />
+    <Compile Include="Domain\Repository\PersonRepository.cs" />
+    <Compile Include="Domain\Repository\RelationRepository.cs" />
+    <Compile Include="Domain\Repository\RepositoryWrapper.cs" />
+    <Compile Include="Domain\Repository\UserRepository.cs" />
     <Compile Include="Domain\Validators\PersonValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

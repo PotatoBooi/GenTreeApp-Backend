@@ -35,6 +35,7 @@ namespace GenTreeApp_API.MockObject
         {
             UUID = Guid.NewGuid(),
             Details = details2,
+            RelationList = new List<Relation> {rel}
 
         };
 
