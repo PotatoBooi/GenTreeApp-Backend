@@ -8,13 +8,14 @@ namespace GenTreeApp.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public Guid DetailsId { get; set; }
         public Details Details { get; set; }
-        public ICollection<Relation> Relations{get; set;}
+        public ICollection<Relation> Relations1{get; set;}
+        public ICollection<Relation> Relations2{get; set;}
 
         public Person()
         {
-            Relations = new HashSet<Relation>();
+            Relations1 = new HashSet<Relation>();
+            Relations2 = new HashSet<Relation>();
         }
 
     }
