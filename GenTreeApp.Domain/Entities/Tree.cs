@@ -13,5 +13,8 @@ namespace GenTreeApp.Domain.Entities
         public bool Editable { get; set; }
         public ICollection<Person> Persons { get; set; }
 
+
+        public ICollection<UserTree> UserTrees { get; set; }
+
     }
 }

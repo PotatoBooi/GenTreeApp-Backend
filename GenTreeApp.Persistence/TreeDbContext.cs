@@ -9,6 +9,10 @@ namespace GenTreeApp.Persistence
 {
     public class TreeDbContext : DbContext
     {
+        public TreeDbContext(DbContextOptions options):base(options)
+        {
+            
+        }
 
         public DbSet<Tree> Trees { get; set; }
         public DbSet<User> Users { get; set; }

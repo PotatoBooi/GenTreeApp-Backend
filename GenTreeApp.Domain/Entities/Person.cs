@@ -8,7 +8,10 @@ namespace GenTreeApp.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public Guid DetailsId { get; set; }
+        //navigation properties
         public Details Details { get; set; }
+        public Tree Tree { get; set; }
         public ICollection<Relation> Relations1{get; set;}
         public ICollection<Relation> Relations2{get; set;}
 

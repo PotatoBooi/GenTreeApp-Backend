@@ -5,11 +5,9 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenTreeApp-API", "GenTreeApp-API\GenTreeApp-API.csproj", "{74D573C9-60C9-45C4-B004-A89FC94A8F8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenTreeApp.Domain", "GenTreeApp.Domain\GenTreeApp.Domain.csproj", "{1E716680-0FDE-4913-AC10-8E64E4F9589B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenTreeApp.Domain", "GenTreeApp.Domain\GenTreeApp.Domain.csproj", "{1E716680-0FDE-4913-AC10-8E64E4F9589B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenTreeApp.Persistence", "GenTreeApp.Persistence\GenTreeApp.Persistence.csproj", "{1D45A4DF-5D17-4634-B941-D9BD04EFFA28}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenTreeApp.API", "GenTreeApp.API\GenTreeApp.API.csproj", "{D2A86657-BC80-4ED5-9EF1-433D4829C667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenTreeApp.API", "GenTreeApp.API\GenTreeApp.API.csproj", "{D2A86657-BC80-4ED5-9EF1-433D4829C667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{1E716680-0FDE-4913-AC10-8E64E4F9589B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E716680-0FDE-4913-AC10-8E64E4F9589B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E716680-0FDE-4913-AC10-8E64E4F9589B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D45A4DF-5D17-4634-B941-D9BD04EFFA28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D45A4DF-5D17-4634-B941-D9BD04EFFA28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D45A4DF-5D17-4634-B941-D9BD04EFFA28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D45A4DF-5D17-4634-B941-D9BD04EFFA28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2A86657-BC80-4ED5-9EF1-433D4829C667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2A86657-BC80-4ED5-9EF1-433D4829C667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2A86657-BC80-4ED5-9EF1-433D4829C667}.Release|Any CPU.ActiveCfg = Release|Any CPU

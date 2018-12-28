@@ -14,9 +14,9 @@ namespace GenTreeApp.Domain.Entities
         public string Surname { get; set; }
         public Sex Sex { get; set; }
         //navigation properties
-        public ICollection<Comment> CommentList { get; set; }
-        public ICollection<Event> EventList { get; set; }
-        public ICollection<Media> MediaList { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Event> Events { get; set; }
+        public ICollection<Media> Media { get; set; }
         public Person Person { get; set; }
 
 

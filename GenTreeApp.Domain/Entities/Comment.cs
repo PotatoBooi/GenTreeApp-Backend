@@ -9,5 +9,6 @@ namespace GenTreeApp.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Body { get; set; }
+        public Person Person { get; set; }
     }
 }
