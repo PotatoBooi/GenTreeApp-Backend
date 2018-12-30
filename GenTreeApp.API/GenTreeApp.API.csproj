@@ -15,8 +15,6 @@
     <Folder Include="DTOs\EnumDictionaries\" />
     <Folder Include="DTOs\Media\" />
     <Folder Include="DTOs\Details\" />
-    <Folder Include="DTOs\Person\" />
-    <Folder Include="DTOs\Tree\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

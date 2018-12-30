@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GenTreeApp.API.Controllers
@@ -11,6 +12,7 @@ namespace GenTreeApp.API.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
+        [Authorize(Policy = "ApiUsers")]
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
