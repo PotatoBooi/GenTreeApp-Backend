@@ -6,8 +6,11 @@ using GenTreeApp.API.DTOs.Person;
 
 namespace GenTreeApp.API.DTOs.Tree
 {
-    public class TreeCreationDto
+    public class TreeGetDto
     {
-        public List<PersonCreationDto> Persons { get; set; }
+        public Guid Id { get; set; }
+        //public string Name { get; set; }
+        public List<PersonWithDetailsDto> Persons { get; set; }
+
     }
 }

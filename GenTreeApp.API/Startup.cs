@@ -18,6 +18,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
+using GenTreeApp.API.Helpers.Mappings;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace GenTreeApp.API
 {
@@ -36,6 +39,17 @@ namespace GenTreeApp.API
 
 
             services.AddCors();
+
+            services.AddSwaggerGen(c =>
+                c.SwaggerDoc("v1", new Info {Title = "GenTreeAPI"}));
+
+            var mappingConfig = new MapperConfiguration
+            (
+                mc => { mc.AddProfile(new MappingProfile()); }
+            );
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddDbContext<GenTreeApp.API.Persistence.TreeDbContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                
@@ -44,6 +58,7 @@ namespace GenTreeApp.API
             
             //IdentityModelEventSource.ShowPII = true;
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -122,6 +137,9 @@ namespace GenTreeApp.API
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GenTreeAPI"));
         }
     }
 }

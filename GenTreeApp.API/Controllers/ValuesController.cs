@@ -12,7 +12,7 @@ namespace GenTreeApp.API.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
-        [Authorize(Policy = "ApiUsers")]
+        
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
