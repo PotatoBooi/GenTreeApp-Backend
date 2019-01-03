@@ -19,7 +19,12 @@ namespace GenTreeApp.Domain.Entities
         public ICollection<Media> Media { get; set; }
         public Person Person { get; set; }
 
-
+        public Details()
+        {
+            Comments = new HashSet<Comment>();
+            Events = new HashSet<Event>();
+            Media = new HashSet<Media>();
+        }
     }
 
     public enum Sex
@@ -27,7 +32,10 @@ namespace GenTreeApp.Domain.Entities
         [DisplayName("Male")]
         Male,
         [DisplayName("Female")]
-        Female
+        Female,
+        [DisplayName("Unknown")]
+        Unknown
+
     }
 
 }

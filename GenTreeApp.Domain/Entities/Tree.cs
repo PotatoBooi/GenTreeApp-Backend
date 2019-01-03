@@ -16,5 +16,11 @@ namespace GenTreeApp.Domain.Entities
 
         public ICollection<UserTree> UserTrees { get; set; }
 
+        public Tree()
+        {
+            Persons = new HashSet<Person>();
+            UserTrees = new HashSet<UserTree>();
+        }
+
     }
 }

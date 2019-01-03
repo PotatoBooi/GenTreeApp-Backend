@@ -10,5 +10,7 @@ namespace GenTreeApp.Domain.Entities
         public Guid Id { get; set; }
         public string Body { get; set; }
         public Person Person { get; set; }
+        //navigation property
+        public Details Details { get; set; }
     }
 }

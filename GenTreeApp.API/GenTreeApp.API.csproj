@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\EnumDictionaries\" />
-    <Folder Include="DTOs\Details\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -28,6 +27,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">

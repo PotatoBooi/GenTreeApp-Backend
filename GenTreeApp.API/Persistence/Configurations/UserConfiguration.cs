@@ -12,8 +12,8 @@ namespace GenTreeApp.API.Persistence.Configurations
             builder.Property(n => n.Name).IsRequired().HasMaxLength(20);
             builder.Property(ph => ph.PasswordHash).IsRequired();
             builder.Property(ph => ph.PasswordSalt).IsRequired();
+            builder.HasOne(a => a.Avatar).WithOne(u => u.User).HasForeignKey<User>(a => a.AvatarId);
 
-      
 
 
         }

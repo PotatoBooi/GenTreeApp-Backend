@@ -51,13 +51,17 @@ namespace GenTreeApp.API
             services.AddSingleton(mapper);
 
             services.AddDbContext<GenTreeApp.API.Persistence.TreeDbContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            options
+               // .UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                
             );
 
             
             //IdentityModelEventSource.ShowPII = true;
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(
+                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); 
            
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");

@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace GenTreeApp.API.DTOs.Media
 {
-    public class MediaCreationDto
+    public class MediaDto
     {
+        public Guid Id { get; set; }
+
         public string Type { get; set; }
         public string Url { get; set; }
-        public Guid UserId { get; set; }
-        public Guid DetailsId { get; set; }
+
     }
 }

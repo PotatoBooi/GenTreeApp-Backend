@@ -13,7 +13,9 @@ namespace GenTreeApp.API.Persistence.Configurations
             builder.Property(sn => sn.Surname).HasMaxLength(50).IsRequired();
             builder.Property(s => s.Sex).IsRequired();
 //            builder.HasOne(p => p.Person).WithOne(d => d.Details).IsRequired();
-
+            builder.HasMany(e => e.Events).WithOne(d => d.Details);
+            builder.HasMany(e => e.Comments).WithOne(d => d.Details);
+            builder.HasMany(e => e.Media).WithOne(d => d.Details);
 
         }
     }

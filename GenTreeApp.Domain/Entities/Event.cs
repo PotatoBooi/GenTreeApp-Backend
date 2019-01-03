@@ -11,6 +11,8 @@ namespace GenTreeApp.Domain.Entities
         public DateTime Date { get; set; }
         public EventType Type { get; set; }
         public string Description { get; set; }
+        //navigation property
+        public Details Details { get; set; }
     }
 
     public enum EventType

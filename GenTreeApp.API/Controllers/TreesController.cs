@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using GenTreeApp.API.DTOs.Person;
+using GenTreeApp.API.DTOs.Relation;
 using GenTreeApp.API.DTOs.Tree;
 using GenTreeApp.API.Persistence;
 using GenTreeApp.Domain.Entities;
@@ -16,7 +17,7 @@ namespace GenTreeApp.API.Controllers
     [ApiController]
     public class TreesController : ControllerBase
     {
-        private TreeDbContext _ctx;
+        private readonly TreeDbContext _ctx;
         private readonly IMapper _mapper;
 
         public TreesController(TreeDbContext ctx, IMapper mapper)
@@ -24,38 +25,103 @@ namespace GenTreeApp.API.Controllers
             _ctx = ctx;
             _mapper = mapper;
         }
-
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Tree>> GetTree([FromBody] Guid id)
+        [HttpGet()]
+        public async Task<IActionResult> GetTrees()
         {
-            return await _ctx.Trees.FindAsync(id);
+            var tree = await _ctx.Trees
+                .Include(p => p.Persons)
+                .ThenInclude(d => d.Details)
+                .ThenInclude(e => e.Events)
+                .Include(p => p.Persons)
+                .ThenInclude(d => d.Details)
+                .ThenInclude(e => e.Media)
+                .Include(p => p.Persons)
+                .ThenInclude(d => d.Details)
+                .ThenInclude(e => e.Comments)
+                .Include(r => r.Persons).ThenInclude(r => r.Relations1)
+                .Include(r => r.Persons).ThenInclude(r => r.Relations2)
+                .ToListAsync();
+            var mappedList = _mapper.Map<List<TreeGetDto>>(tree);
+            return Ok(mappedList);
         }
-        [HttpGet("{id}/persons")]
-        public ActionResult<IEnumerable<PersonWithDetailsDto>> GetPersonsForTree([FromBody] Guid id)
-        {
-            return new List<PersonWithDetailsDto>();
-        }
-    
 
-        [HttpGet]
-        public ActionResult<IEnumerable<TreeCreationDto>> GetTrees()
+        [HttpGet("{id}",Name = "GetTree")]
+        public async Task<ActionResult<TreeGetDto>> GetTree(Guid id)
         {
-            return new List<TreeCreationDto>
+            var tree = await _ctx.Trees.Where(t => t.Id == id)
+                .Include(p => p.Persons)
+                .ThenInclude(d => d.Details)
+                .ThenInclude(e => e.Events)
+                .Include(p => p.Persons)
+                .ThenInclude(d => d.Details)
+                .ThenInclude(e => e.Media)
+                .Include(p => p.Persons)
+                .ThenInclude(d => d.Details)
+                .ThenInclude(e => e.Comments)
+                .Include(r => r.Persons).ThenInclude(r => r.Relations1)
+                .Include(r => r.Persons).ThenInclude(r => r.Relations2)
+                .FirstAsync();
+
+            var mappedTree = _mapper.Map<TreeGetDto>(tree);
+            
+//            foreach (var treePerson in tree.Persons)
+//            {
+//                List<RelationDto> joinedRelation = new List<RelationDto>();
+//                foreach (var relation in treePerson.Relations1)
+//                {
+//                    joinedRelation.Add(_mapper.Map<RelationDto>(relation));
+//                }
+//                foreach (var relation in treePerson.Relations2)
+//                {
+//                    joinedRelation.Add(_mapper.Map<RelationDto>(relation));
+//                }
+//
+//                
+//            }
+           
+            return Ok(mappedTree);
+        }
+        [HttpGet("{id}/persons",Name="GetPersonsForTree")]
+        
+        public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersonsForTree(Guid id)
+        {
+
+            var persons = await _ctx.Persons.Where(t => t.Tree.Id == id)
+                .Include(d=>d.Details)
+                .ThenInclude(e=>e.Events)
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Comments)
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Media)
+                .Include(r => r.Relations1)
+                .Include(r => r.Relations2)
+                .ToListAsync();
+            var mapped = _mapper.Map<List<PersonDto>>(persons);
+            return Ok(mapped);
+        }
+
+
+        [HttpPost("{id}/persons")]
+        public async Task<ActionResult> AddPersonToTree(Guid id,[FromBody] PersonCreationDto person)
+        {
+            var tree = _ctx.Trees.FindAsync(id);
+            if (tree == null)
             {
-                new TreeCreationDto
-                {
-                    Persons = new List<PersonCreationDto>
-                    {
-                        new PersonCreationDto
-                        {
-                            Name = "jacek",
-                            Surname = "uryga",
-                            Sex = "Jakaś"
-                        }
-                    }
-                }
-            };
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var mappedPerson = _mapper.Map<Person>(person);
+            mappedPerson.Tree.Id = tree.Result.Id;
+            await _ctx.Persons.AddAsync(mappedPerson);
+            await _ctx.SaveChangesAsync();
+            var creationResult = _mapper.Map<PersonDto>(mappedPerson);
+            return CreatedAtRoute("GetPersonsForTree", new {Id = creationResult.Id});
+
         }
 
         [HttpPost]
@@ -67,9 +133,10 @@ namespace GenTreeApp.API.Controllers
             }
 
             var addTree = _mapper.Map<Tree>(tree);
-            var trees = await _ctx.Trees.ToListAsync();
+            await _ctx.Trees.AddAsync(addTree);
+            await _ctx.SaveChangesAsync();
 
-            return Ok();
+            return CreatedAtRoute("GetTree", new {Id = addTree.Id});
 //            var addTree = new Tree();
 //            var addPersons = new List<Person>();
 //            foreach (var personCreation in tree.Persons)
@@ -88,7 +155,7 @@ namespace GenTreeApp.API.Controllers
 //            }
 
         }
-        [HttpPut("{treeId}/{userId}")]
+        [HttpPost("{treeId}/{userId}")]
         public async Task<ActionResult> AddTreeOwner([FromBody] Guid treeId, Guid userId)
         {
             var tree = await _ctx.Trees.FindAsync(treeId);
@@ -101,6 +168,40 @@ namespace GenTreeApp.API.Controllers
             _ctx.UserTrees.Add(new UserTree {Tree = tree, User = user});
             await _ctx.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateTree(Guid id,[FromBody]TreeCreationDto treeUpdated)
+        {
+            var tree = await _ctx.Trees.FindAsync(id);
+            if (tree == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+             _ctx.Trees.Update(_mapper.Map<Tree>(treeUpdated));
+            await _ctx.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTree(Guid id)
+        {
+
+            var tree = await _ctx.Trees.FindAsync(id);
+            if (tree == null)
+            {
+                return NotFound();
+            }
+
+            _ctx.Trees.Remove(tree);
+            await _ctx.SaveChangesAsync();
+            return NoContent();
         }
 
     }
