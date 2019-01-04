@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <StartupObject>GenTreeApp.API.Program</StartupObject>
+    <UserSecretsId>96452512-b75d-41da-ad9c-666729613526</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -53,7 +53,7 @@ namespace GenTreeApp.API
             services.AddDbContext<GenTreeApp.API.Persistence.TreeDbContext>(options => 
             options
                // .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                .UseSqlServer(Configuration.GetConnectionString("AzureConnection"))
                
             );
 
