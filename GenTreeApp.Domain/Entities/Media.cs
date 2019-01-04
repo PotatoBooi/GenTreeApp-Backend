@@ -8,9 +8,10 @@ namespace GenTreeApp.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-
+        public string Name { get; set; }
         public MediaType Type { get; set; }
-        public string Url { get; set; }
+
+        public string Content { get; set; }
         //navigation property
         public Details Details { get; set; }
         //navigation to avatar owner
@@ -26,6 +27,7 @@ namespace GenTreeApp.Domain.Entities
         [DisplayName("Video")]
         Video,
         [DisplayName("Avatar")]
-        Avatar
+        Avatar,
+        Unknown
     }
 }

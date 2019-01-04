@@ -5,9 +5,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using GenTreeApp.API.DTOs.Users;
 using GenTreeApp.API.DTOs.Users.Login;
 using GenTreeApp.API.DTOs.Users.Register;
 using GenTreeApp.API.Helpers;
+using GenTreeApp.API.Persistence;
 using GenTreeApp.API.Services;
 using GenTreeApp.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -26,11 +28,13 @@ namespace GenTreeApp.API.Controllers
     {
         private IUserService _userService;
         private readonly AppSettings _appSettings;
+        private readonly TreeDbContext _ctx;
 
-        public UsersController(IUserService userService, IOptions<AppSettings> appSettings)
+        public UsersController(IUserService userService, IOptions<AppSettings> appSettings,TreeDbContext ctx)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
+            _ctx = ctx;
         }
 
 
@@ -106,6 +110,28 @@ namespace GenTreeApp.API.Controllers
             }
         }
 
+        [HttpPost("avatar")]
+        public async Task<ActionResult> AddAvatar([FromBody] AddAvatarToUserDto request)
+        {
+            var user = _userService.GetById(request.UserId);
+            var media = await _ctx.Media.FindAsync(request.MediaId);
+            if (user == null || media == null)
+            {
+                return NotFound();
+            }
+
+            if (media.Type != MediaType.Picture)
+            {
+                return BadRequest();
+            }
+
+            media.User = user;
+            media.Type = MediaType.Avatar;
+
+            _ctx.Media.Update(media);
+            await _ctx.SaveChangesAsync();
+            return Ok(new {mediaId = media.Id});
+        }
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

@@ -11,7 +11,7 @@ namespace GenTreeApp.Domain.Entities
         public string Name { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public Guid AvatarId { get; set; }
+        public Guid? AvatarId { get; set; }
         public Media Avatar { get; set; }
 
         public ICollection<UserTree> UserTrees { get; set; }

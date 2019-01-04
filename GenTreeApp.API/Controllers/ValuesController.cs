@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GenTreeApp.API.Controllers
@@ -27,9 +29,15 @@ namespace GenTreeApp.API.Controllers
         }
 
         // POST api/values
+        [Consumes("multipart/form-data")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromForm]  IFormFile file)
         {
+            using (var sr = new StreamReader(file.OpenReadStream()))
+            {
+                var content = await sr.ReadToEndAsync();
+                return Ok(content);
+            }
         }
 
         // PUT api/values/5

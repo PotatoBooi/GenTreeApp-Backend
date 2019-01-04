@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GenTreeApp.API.DTOs.Comment;
 using GenTreeApp.API.DTOs.Event;
 using GenTreeApp.API.DTOs.Media;
 
-namespace GenTreeApp.API.DTOs
+namespace GenTreeApp.API.DTOs.Details
 {
     public class DetailsDto
     {

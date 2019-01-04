@@ -8,6 +8,6 @@ namespace GenTreeApp.API.DTOs.Comment
     public class CommentCreationDto
     {
         public string Body { get; set; }
-        public Guid DetailsId { get; set; }
+
     }
 }

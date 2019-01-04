@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using GenTreeApp.API.DTOs;
 using GenTreeApp.API.DTOs.Comment;
+using GenTreeApp.API.DTOs.Details;
 using GenTreeApp.API.DTOs.Event;
 using GenTreeApp.API.DTOs.Media;
 using GenTreeApp.API.DTOs.Person;
@@ -19,11 +21,8 @@ namespace GenTreeApp.API.Helpers.Mappings
         public MappingProfile()
         {
             CreateMap<TreeCreationDto, Tree>();
-            CreateMap<EventCreationDto, Event>()
-                .ForPath(dest => dest.Details.Id, opt => opt.MapFrom(src => src.DetailsId));
-            CreateMap<MediaCreationDto, Media>()
-                .ForPath(dest=>dest.Details.Id,opt=>opt.MapFrom(src=>src.DetailsId))
-                .ForPath(dest=>dest.User.Id,opt=>opt.MapFrom(src=>src.UserId));
+            CreateMap<EventCreationDto, Event>();
+
             CreateMap<PersonCreationDto, Person>()
                 .ForPath(dest => dest.Details.Name, opt => opt.MapFrom(src => src.Name))
                 .ForPath(dest => dest.Details.Surname, opt => opt.MapFrom(src => src.Surname)); // add enum resolver 
@@ -37,7 +36,7 @@ namespace GenTreeApp.API.Helpers.Mappings
             CreateMap<MediaType, string>()
                 .ConvertUsing(src => src.ToString());
 
-        
+            CreateMap<Details, DetailsDto>();
             CreateMap<Tree, TreeGetDto>();
             CreateMap<Person, PersonDto>()
                 .ForMember(dest=>dest.Relations,opt=>opt.MapFrom(src=>mergeLists(src))) ;
@@ -51,8 +50,7 @@ namespace GenTreeApp.API.Helpers.Mappings
             CreateMap<Media, MediaDto>();
             CreateMap<Event, EventDto>();
             CreateMap<Comment, CommentDto>();
-            CreateMap<CommentCreationDto, Comment>()
-                .ForPath(dest => dest.Details.Id, opt => opt.MapFrom(src => src.DetailsId));
+            CreateMap<CommentCreationDto, Comment>();
 
 
         }

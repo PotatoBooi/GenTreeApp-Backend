@@ -8,11 +8,13 @@ using GenTreeApp.API.DTOs.Relation;
 using GenTreeApp.API.DTOs.Tree;
 using GenTreeApp.API.Persistence;
 using GenTreeApp.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GenTreeApp.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TreesController : ControllerBase

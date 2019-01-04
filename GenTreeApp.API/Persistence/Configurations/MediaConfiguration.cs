@@ -10,7 +10,7 @@ namespace GenTreeApp.API.Persistence.Configurations
         {
             builder.HasKey(k => k.Id);
             builder.Property(t => t.Type).IsRequired();
-            builder.Property(u => u.Url).IsRequired();
+
         }
     }
 }

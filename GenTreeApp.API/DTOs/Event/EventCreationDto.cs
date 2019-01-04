@@ -7,6 +7,6 @@ namespace GenTreeApp.API.DTOs.Event
         public DateTime Date { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
-        public Guid DetailsId { get; set; }
+
 }
 }

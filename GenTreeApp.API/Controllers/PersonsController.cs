@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AutoMapper;
 using Castle.Core.Internal;
@@ -11,12 +12,13 @@ using GenTreeApp.API.DTOs.Person;
 using GenTreeApp.API.DTOs.Relation;
 using GenTreeApp.API.Persistence;
 using GenTreeApp.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GenTreeApp.API.Controllers
 {
-
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PersonsController : ControllerBase
@@ -105,7 +107,9 @@ namespace GenTreeApp.API.Controllers
             {
                 return NotFound();
             }
-            var relations = await _ctx.Relations.Where(p => (p.Person.Id == id) || (p.SecondPerson.Id == id)).Include(p=>p.SecondPerson).ToListAsync();
+            var relations = await _ctx.Relations
+                .Where(p => (p.Person.Id == id) || (p.SecondPerson.Id == id))
+                .Include(p=>p.SecondPerson).ToListAsync();
 
             return Ok(_mapper.Map<List<RelationDto>>(relations));
         }
@@ -138,7 +142,7 @@ namespace GenTreeApp.API.Controllers
         [HttpPost("{id}/events")]
         public async Task<ActionResult> AddEventToPerson(Guid id,[FromBody] EventCreationDto eventCreation)
         {
-            var person = await _ctx.Persons.FindAsync(id);
+            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).FirstAsync();
             if (person == null)
             {
                 return NotFound();
@@ -148,8 +152,10 @@ namespace GenTreeApp.API.Controllers
                 return BadRequest();
             }
 
+
             var newEvent = _mapper.Map<Event>(eventCreation);
             //TODO edit this after db migration(relational fix)
+            newEvent.Details = person.Details;
             await _ctx.Events.AddAsync(newEvent);
             await _ctx.SaveChangesAsync();
             return CreatedAtRoute("GetPersonEvents", new {Id = newEvent.Id});
@@ -167,8 +173,10 @@ namespace GenTreeApp.API.Controllers
                 return BadRequest();
             }
 
+
             var newComment = _mapper.Map<Comment>(comment);
-            //TODO edit this after db migration(relational fix)
+
+            newComment.Details = person.Details;
             await _ctx.Comments.AddAsync(newComment);
             await _ctx.SaveChangesAsync();
             return CreatedAtRoute("GetPersonComments", new { Id = newComment.Id });
@@ -177,8 +185,9 @@ namespace GenTreeApp.API.Controllers
         public async Task<ActionResult> AddMediaToPerson(Guid id, [FromBody] MediaCreationDto media)
         {
             //todo change this after media upload is implemented
-            var person = await _ctx.Persons.FindAsync(id);
-            if (person == null)
+            var person = await _ctx.Persons.Where(p=>p.Id == id).Include(d=>d.Details).FirstAsync();
+            var mediaToAdd = await _ctx.Media.FindAsync(media.MediaId);
+            if (person == null || mediaToAdd == null)
             {
                 return NotFound();
             }
@@ -187,11 +196,11 @@ namespace GenTreeApp.API.Controllers
                 return BadRequest();
             }
 
-            var newMedia = _mapper.Map<Media>(media);
-            //TODO edit this after db migration(relational fix)
-            await _ctx.Media.AddAsync(newMedia);
+            mediaToAdd.Details = person.Details;
+            _ctx.Media.Update(mediaToAdd);
             await _ctx.SaveChangesAsync();
-            return CreatedAtRoute("GetPersonComment", new { Id = newMedia.Id });
+            return Ok();
+
         }
 
         [HttpPost("relations")]
