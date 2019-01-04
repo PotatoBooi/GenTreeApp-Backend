@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GenTreeApp.Domain.Entities
@@ -16,8 +17,12 @@ namespace GenTreeApp.Domain.Entities
 
     public enum RelationType
     {
-       Child,
-       Marriage
+        [DisplayName("Child")]
+        Child,
+        [DisplayName("Marriage")]
+        Marriage,
+        [DisplayName("Sibling")]
+        Sibling
 
     }
 }

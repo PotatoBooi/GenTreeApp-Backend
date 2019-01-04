@@ -9,7 +9,7 @@ namespace GenTreeApp.API.DTOs.Tree
     public class TreeGetDto
     {
         public Guid Id { get; set; }
-        //public string Name { get; set; }
+        public string Name { get; set; }
         public List<PersonDto> Persons { get; set; }
 
     }

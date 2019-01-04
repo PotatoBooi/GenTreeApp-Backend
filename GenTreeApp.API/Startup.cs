@@ -129,7 +129,11 @@ namespace GenTreeApp.API
                 .AllowCredentials());
 
             app.UseAuthentication();
-
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService <TreeDbContext>();
+                context.Database.Migrate();
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

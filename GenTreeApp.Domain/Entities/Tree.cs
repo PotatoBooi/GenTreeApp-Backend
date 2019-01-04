@@ -11,6 +11,7 @@ namespace GenTreeApp.Domain.Entities
 
         public Guid Id { get; set; }
         public bool Editable { get; set; }
+        public string Name { get; set; }
         public ICollection<Person> Persons { get; set; }
 
 

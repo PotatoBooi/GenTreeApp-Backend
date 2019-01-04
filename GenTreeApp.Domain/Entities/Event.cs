@@ -20,6 +20,11 @@ namespace GenTreeApp.Domain.Entities
         [DisplayName("Birth")]
         Birth,
         [DisplayName("Death")]
-        Death
+        Death,
+        [DisplayName("Wedding")]
+        Wedding,
+        [DisplayName("Divorce")]
+        Divorce
+
     }
 }

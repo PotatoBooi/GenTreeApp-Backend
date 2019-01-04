@@ -38,21 +38,9 @@ namespace GenTreeApp.API.Controllers
         }
 
 
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+     
 
-       
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+  
 
         // POST api/<controller>
         [AllowAnonymous]
@@ -132,16 +120,6 @@ namespace GenTreeApp.API.Controllers
             await _ctx.SaveChangesAsync();
             return Ok(new {mediaId = media.Id});
         }
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

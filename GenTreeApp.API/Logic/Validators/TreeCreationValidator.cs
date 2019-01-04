@@ -11,7 +11,7 @@ namespace GenTreeApp.API.Logic.Validators
     {
         public TreeCreationValidator()
         {
-            RuleFor(p => p.Persons).NotEmpty();
+            RuleFor(p => p.Name).NotEmpty();
         }
     }
 }

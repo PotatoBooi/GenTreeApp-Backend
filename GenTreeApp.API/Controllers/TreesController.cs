@@ -28,7 +28,7 @@ namespace GenTreeApp.API.Controllers
             _mapper = mapper;
         }
         [HttpGet()]
-        public async Task<IActionResult> GetTrees()
+        public async Task<ActionResult<TreeGetDto>> GetTrees()
         {
             var tree = await _ctx.Trees
                 .Include(p => p.Persons)
@@ -138,7 +138,7 @@ namespace GenTreeApp.API.Controllers
             await _ctx.Trees.AddAsync(addTree);
             await _ctx.SaveChangesAsync();
 
-            return CreatedAtRoute("GetTree", new {Id = addTree.Id});
+            return CreatedAtRoute("GetTree", new {treeId = addTree.Id});
 //            var addTree = new Tree();
 //            var addPersons = new List<Person>();
 //            foreach (var personCreation in tree.Persons)

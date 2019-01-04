@@ -8,6 +8,6 @@ namespace GenTreeApp.API.DTOs.Tree
 {
     public class TreeCreationDto
     {
-        public List<PersonCreationDto> Persons { get; set; }
+        public string Name { get; set; }
     }
 }
