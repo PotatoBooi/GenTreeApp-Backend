@@ -9,6 +9,7 @@ namespace GenTreeApp.API.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Tree> builder)
         {
             builder.HasKey(k => k.Id);
+            builder.Property(n => n.Name).IsRequired();
             builder.Property(e => e.Editable).IsRequired();
             builder.HasMany(t => t.Persons).WithOne(t => t.Tree);
 

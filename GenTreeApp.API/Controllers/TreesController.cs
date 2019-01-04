@@ -185,7 +185,8 @@ namespace GenTreeApp.API.Controllers
                 return BadRequest();
             }
 
-             _ctx.Trees.Update(_mapper.Map<Tree>(treeUpdated));
+            tree.Name = treeUpdated.Name;
+             _ctx.Trees.Update(tree);
             await _ctx.SaveChangesAsync();
 
             return Ok();

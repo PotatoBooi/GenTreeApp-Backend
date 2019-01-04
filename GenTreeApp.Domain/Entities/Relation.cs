@@ -9,9 +9,10 @@ namespace GenTreeApp.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public RelationType Type { get; set; }
+        public Guid PersonId { get; set; }
         public Person Person { get; set; }
         public Person SecondPerson { get; set; }
-
+        public Guid SecondPersonId { get; set; }
 
     }
 

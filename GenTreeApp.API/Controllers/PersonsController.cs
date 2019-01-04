@@ -130,12 +130,12 @@ namespace GenTreeApp.API.Controllers
             }
 
             var mappedPerson = _mapper.Map<Person>(person);
-            mappedPerson.Tree.Id = treeId;
+            mappedPerson.Tree = tree;
             await _ctx.Persons.AddAsync(mappedPerson);
             await _ctx.SaveChangesAsync();
             var personReturned = _mapper.Map<PersonDto>(mappedPerson);
 
-            return CreatedAtRoute("GetPerson", new {Id = personReturned.Id});
+            return CreatedAtRoute("GetPerson", new {Id = personReturned.Id},personReturned);
 
         }
 
@@ -233,7 +233,7 @@ namespace GenTreeApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdatePerson(Guid id,[FromBody] PersonCreationDto personUpdated)
         {
-            var person = await _ctx.Persons.FindAsync(id);
+            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).FirstAsync();
             if (person == null)
             {
                 return NotFound();
@@ -241,18 +241,15 @@ namespace GenTreeApp.API.Controllers
 
             if (!personUpdated.Name.IsNullOrEmpty())
             {
-
+                person.Details.Name = personUpdated.Name;
             }
             if (!personUpdated.Surname.IsNullOrEmpty())
             {
-
-            }
-            if (!personUpdated.Sex.IsNullOrEmpty())
-            {
-
+                person.Details.Surname = personUpdated.Name;
             }
 
-
+            _ctx.Update(person);
+            await _ctx.SaveChangesAsync();
             return Ok(_mapper.Map<PersonDto>(person));
 
         }

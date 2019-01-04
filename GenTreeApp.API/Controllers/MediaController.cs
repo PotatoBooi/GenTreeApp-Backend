@@ -67,6 +67,21 @@ namespace GenTreeApp.API.Controllers
             return Ok(new { Id = media.Id });
         }
 
+        [HttpDelete("id")]
+        public async Task<ActionResult> DeleteMedia(Guid id)
+        {
+            var media = await _ctx.Media.FindAsync(id);
+            if (media == null)
+            {
+                return NotFound();
+            }
+
+            _ctx.Media.Remove(media);
+            await _ctx.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private MediaType resolveMediaType(string typeString)
         {
             if (typeString.StartsWith("image"))

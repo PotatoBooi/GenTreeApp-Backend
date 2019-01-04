@@ -15,6 +15,6 @@ namespace GenTreeApp.API.DTOs.Details
         //navigation properties
         public List<CommentDto> Comments { get; set; }
         public List<EventDto> Events { get; set; }
-        public List<MediaDto> Media { get; set; }
+       // public List<MediaDto> Media { get; set; }
     }
 }

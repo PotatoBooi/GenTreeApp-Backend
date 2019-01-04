@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <StartupObject>GenTreeApp.API.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,6 +10,10 @@
     <Compile Remove="Persistence\Migrations\20181228171736_InitDatabase.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20181228174525_InitDatabase.cs" />
     <Compile Remove="Persistence\Migrations\20181228174525_InitDatabase.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20190104181800_TreeNameProp.cs" />
+    <Compile Remove="Persistence\Migrations\20190104181800_TreeNameProp.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20190104182115_TreeNameRelationComp.cs" />
+    <Compile Remove="Persistence\Migrations\20190104182115_TreeNameRelationComp.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
