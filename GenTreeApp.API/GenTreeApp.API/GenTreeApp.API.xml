@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GenTreeApp.API</name>
+    </assembly>
+    <members>
+        <member name="M:GenTreeApp.API.Controllers.MediaController.Get(System.Guid)">
+            <summary>
+            Returns media with specified id
+            </summary>
+            <param name="id">Id of media</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.MediaController.Post(Microsoft.AspNetCore.Http.IFormFile)">
+             <summary>
+             Uploads media (picture,video).
+             </summary>
+            <remarks>Header media-type must be multipart/form-data.
+            Returns Id of Media for later usage.
+             </remarks>
+             <returns>Id of created media</returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.MediaController.DeleteMedia(System.Guid)">
+            <summary>
+            Deletes media
+            </summary>
+            <param name="id">Id of media</param>
+            <returns>No content if succefully deleted</returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.GetPersonById(System.Guid)">
+            <summary>
+            Returns Person with specified id
+            </summary>
+            <param name="id">Id of person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.GetPersonMedia(System.Guid)">
+            <summary>
+            Returns list of Media related to Person 
+            </summary>
+            <param name="id">Id of Person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.GetPersonAvatar(System.Guid)">
+            <summary>
+            Returns Avatar related to Person
+            </summary>
+            <param name="id">Id of Person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.GetPersonEvents(System.Guid)">
+            <summary>
+            Returns list of Events related to Person
+            </summary>
+            <param name="id">Id of Person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.GetPersonComments(System.Guid)">
+            <summary>
+            Returns list of Comments related to Person
+            </summary>
+            <param name="id">Id of Person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.GetPersonRelations(System.Guid)">
+            <summary>
+            Returns list of Relations related to Person
+            </summary>
+            <param name="id">Id of Person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.AddPerson(System.Guid,GenTreeApp.API.DTOs.Person.PersonCreationDto)">
+            <summary>
+            Adds Person to specified Tree
+            </summary>
+            <remarks>Relations and Media must be added separately</remarks>
+            <param name="treeId">Id of Tree</param>
+            <param name="person">Person object for sending data</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.AddEventToPerson(System.Guid,GenTreeApp.API.DTOs.Event.EventCreationDto)">
+            <summary>
+            Adds event to specified Person
+            </summary>
+            <remarks>Possible Event types:
+            -Birth
+            -Death
+            -Wedding
+            -Divorce
+            </remarks>
+            <param name="id">If of Person</param>
+            <param name="eventCreation">Object for creating an Event</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.AddCommentToPerson(System.Guid,GenTreeApp.API.DTOs.Comment.CommentCreationDto)">
+            <summary>
+            Adds comment to specified Person
+            </summary>
+            <param name="id">If of Person</param>
+            <param name="comment">Object for creating Comment</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.AddMediaToPerson(System.Guid,GenTreeApp.API.DTOs.Media.MediaCreationDto)">
+            <summary>
+            Adds picture or video to person
+            </summary>
+            <param name="id">Id of Person</param>
+            <param name="media">Object which contains mediaId</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.SetPersonAvatar(System.Guid,System.Guid)">
+            <summary>
+            Sets avatar for person with given id and mediaId to set
+            </summary>
+            <param name="id"></param>
+            <param name="mediaId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.AddRelationToPerson(GenTreeApp.API.DTOs.Relation.RelationCreationDto)">
+            <summary>
+            Adds Relation to person
+            </summary>
+            <remarks>Relation types: Child, Marriage, Sibling</remarks>
+            <param name="relation">Object which contains id of 2 Persons to create Relation</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.UpdatePerson(System.Guid,GenTreeApp.API.DTOs.Person.PersonCreationDto)">
+            <summary>
+            Updates person 
+            </summary>
+            <remarks>only possible to edit name and surname</remarks>
+            <param name="id">Id of Person</param>
+            <param name="personUpdated">Object for Person edit</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.PersonsController.DeletePerson(System.Guid)">
+            <summary>
+            Deletes Person
+            </summary>
+            <param name="id">Id of Person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.GetTrees">
+            <summary>
+            Returns List of Trees
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.GetTree(System.Guid)">
+            <summary>
+            Returns tree with specified id
+            </summary>
+            <param name="id">Id of Tree</param>
+            <returns>tree</returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.GetUsersTrees(System.Guid)">
+            <summary>
+            Returns list of Trees related to User
+            </summary>
+            <param name="userId">User Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.GetPersonsForTree(System.Guid)">
+            <summary>
+            Gets list of all persons in tree
+            </summary>
+            <param name="id"></param>
+            <returns>List of persons</returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.AddPersonToTree(System.Guid,GenTreeApp.API.DTOs.Person.PersonCreationDto)">
+            <summary>
+            Adds Person to specified Tree
+            </summary>
+            <param name="id">Id of Tree</param>
+            <param name="person">Id of Person</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.AddTree(GenTreeApp.API.DTOs.Tree.TreeCreationDto)">
+            <summary>
+            Adds Tree and returns Id for later edition
+            </summary>
+            <param name="tree">Object for Tree creation</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.AddTreeOwner(System.Guid,System.Guid)">
+            <summary>
+            Adds owner to Tree
+            </summary>
+            <remarks>This must be done after Tree creation</remarks>
+            <param name="treeId">Id of Tree</param>
+            <param name="userId">Id of User</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.UpdateTree(System.Guid,GenTreeApp.API.DTOs.Tree.TreeCreationDto)">
+            <summary>
+            Changes Tree
+            </summary>
+            <param name="id">Id of Tree</param>
+            <param name="treeUpdated">Object for Tree edition</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.DeleteTree(System.Guid)">
+            <summary>
+            Deletes Tree
+            </summary>
+            <param name="id">Id of Tree</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.UsersController.Authenticate(GenTreeApp.API.DTOs.Users.Login.UserLoginDto)">
+             <summary>
+             Authenticates User (Login)
+             </summary>
+             <remarks>This is used for logging.
+             Returns Id, Username and Bearer Token.
+             Token must be in Authorization header when every other controller is used.
+             Usage:
+             
+             [{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIs...."} ]
+            
+             </remarks>
+             <param name="userDto">Object containing Login and Password</param>
+             <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.UsersController.Register(GenTreeApp.API.DTOs.Users.Register.UserRegisterDto)">
+            <summary>
+            Registers user 
+            </summary>
+            <param name="userDto">Object containing Login and Password </param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.UsersController.AddAvatar(GenTreeApp.API.DTOs.Users.AddAvatarToUserDto)">
+            <summary>
+            Adds avatar to user
+            </summary>
+            <remarks>Media must be of type Picture</remarks>
+            <param name="request">Contains Id of User and Id of Media</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

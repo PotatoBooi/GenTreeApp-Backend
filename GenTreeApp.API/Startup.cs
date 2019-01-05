@@ -45,12 +45,12 @@ namespace GenTreeApp.API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {Title = "GenTreeAPI"});
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-
-                //... and tell Swagger to use those XML comments.
-                c.IncludeXmlComments(xmlPath);
+                c.SwaggerDoc("v1", new Info {Title = "GenTreeAPI"}); 
+                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            
+            //... and tell Swagger to use those XML comments.
+            c.IncludeXmlComments(xmlPath);
             });
 
 

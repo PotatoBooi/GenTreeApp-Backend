@@ -9,6 +9,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.2\GenTreeApp.API.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
+    <ExcludeXmlAssemblyFiles>false</ExcludeXmlAssemblyFiles>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>GenTreeApp.API\GenTreeApp.API.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
