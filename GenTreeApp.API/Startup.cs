@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GenTreeApp.API.Helpers;
@@ -20,6 +22,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using GenTreeApp.API.Helpers.Mappings;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace GenTreeApp.API
@@ -41,7 +44,15 @@ namespace GenTreeApp.API
             services.AddCors();
 
             services.AddSwaggerGen(c =>
-                c.SwaggerDoc("v1", new Info {Title = "GenTreeAPI"}));
+            {
+                c.SwaggerDoc("v1", new Info {Title = "GenTreeAPI"});
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                //... and tell Swagger to use those XML comments.
+                c.IncludeXmlComments(xmlPath);
+            });
+
 
             var mappingConfig = new MapperConfiguration
             (
@@ -115,11 +126,10 @@ namespace GenTreeApp.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+        
 
             // global cors policy
             app.UseCors(x => x

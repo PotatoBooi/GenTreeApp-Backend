@@ -25,7 +25,11 @@ namespace GenTreeApp.API.Controllers
             _ctx = ctx;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Returns media with specified id
+        /// </summary>
+        /// <param name="id">Id of media</param>
+        /// <returns></returns>
         [HttpGet("{id}",Name="GetMedia")]
         public async Task<ActionResult<MediaDto>> Get(Guid id)
         {
@@ -37,6 +41,13 @@ namespace GenTreeApp.API.Controllers
 
             return Ok(_mapper.Map<MediaDto>(media));
         }
+        /// <summary>
+        /// Uploads media (picture,video).
+        /// </summary>
+        ///<remarks>Header media-type must be multipart/form-data.
+        ///Returns Id of Media for later usage.
+        /// </remarks>
+        /// <returns>Id of created media</returns>
         [Consumes("multipart/form-data")]
         [HttpPost]
         public async Task<ActionResult<Guid>>Post([FromForm]  IFormFile file)
@@ -66,8 +77,12 @@ namespace GenTreeApp.API.Controllers
 
             return Ok(new { Id = media.Id });
         }
-
-        [HttpDelete("id")]
+        /// <summary>
+        /// Deletes media
+        /// </summary>
+        /// <param name="id">Id of media</param>
+        /// <returns>No content if succefully deleted</returns>
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMedia(Guid id)
         {
             var media = await _ctx.Media.FindAsync(id);

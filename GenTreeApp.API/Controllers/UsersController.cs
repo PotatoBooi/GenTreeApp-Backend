@@ -14,6 +14,7 @@ using GenTreeApp.API.Services;
 using GenTreeApp.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -38,9 +39,21 @@ namespace GenTreeApp.API.Controllers
         }
 
 
-     
 
-  
+
+        /// <summary>
+        /// Authenticates User (Login)
+        /// </summary>
+        /// <remarks>This is used for logging.
+        /// Returns Id, Username and Bearer Token.
+        /// Token must be in Authorization header when every other controller is used.
+        /// Usage:
+        /// 
+        /// [{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIs...."} ]
+        ///
+        /// </remarks>
+        /// <param name="userDto">Object containing Login and Password</param>
+        /// <returns></returns>
 
         // POST api/<controller>
         [AllowAnonymous]
@@ -77,6 +90,11 @@ namespace GenTreeApp.API.Controllers
                 Token = tokenString
             });
         }
+        /// <summary>
+        /// Registers user 
+        /// </summary>
+        /// <param name="userDto">Object containing Login and Password </param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]UserRegisterDto userDto)
@@ -97,7 +115,12 @@ namespace GenTreeApp.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
+        /// <summary>
+        /// Adds avatar to user
+        /// </summary>
+        /// <remarks>Media must be of type Picture</remarks>
+        /// <param name="request">Contains Id of User and Id of Media</param>
+        /// <returns></returns>
         [HttpPost("avatar")]
         public async Task<ActionResult> AddAvatar([FromBody] AddAvatarToUserDto request)
         {
@@ -112,7 +135,15 @@ namespace GenTreeApp.API.Controllers
             {
                 return BadRequest();
             }
+            var currentAvatar = await _ctx.Media.Include(d => d.User)
+                .Where(d => (d.User.Id == user.AvatarId) && (d.Type == MediaType.Avatar))
+                .FirstAsync();
 
+            if (currentAvatar != null)
+            {
+                currentAvatar.Type = MediaType.Picture;
+                _ctx.Update(currentAvatar);
+            }
             media.User = user;
             media.Type = MediaType.Avatar;
 

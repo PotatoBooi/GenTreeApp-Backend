@@ -14,7 +14,7 @@ namespace GenTreeApp.API.DTOs.Person
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Sex { get; set; }
-        public List<RelationCreationDto> Relations { get; set; } = new List<RelationCreationDto>();
+//        public List<RelationCreationDto> Relations { get; set; } = new List<RelationCreationDto>();
         public List<EventCreationDto> Events { get; set; }= new List<EventCreationDto>();
 //        public List<MediaCreationDto> Media { get; set; } = new List<MediaCreationDto>();
        
