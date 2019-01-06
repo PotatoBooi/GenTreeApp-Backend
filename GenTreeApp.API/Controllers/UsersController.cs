@@ -51,12 +51,20 @@ namespace GenTreeApp.API.Controllers
         /// 
         /// [{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIs...."} ]
         ///
-        /// </remarks>
-        /// <param name="userDto">Object containing Login and Password</param>
-        /// <returns></returns>
+        /// Sample response:
+        ///
+        /// 
+        /// {
+     ///   "id": "df4cab02-8062-4586-3d83-08d6728edcaf",
+     ///   "username": "admin123",
+    ///    "token": "eyJhbGciOiJIUzIGNh"
+    /// }
+    /// </remarks>
+    /// <param name="userDto">Object containing Login and Password</param>
+    /// <returns></returns>
 
-        // POST api/<controller>
-        [AllowAnonymous]
+    // POST api/<controller>
+    [AllowAnonymous]
         [HttpPost("auth")]
         public IActionResult Authenticate([FromBody] UserLoginDto userDto)
         {

@@ -217,6 +217,14 @@
              
              [{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIs...."} ]
             
+             Sample response:
+            
+             
+             {
+               "id": "df4cab02-8062-4586-3d83-08d6728edcaf",
+               "username": "admin123",
+                "token": "eyJhbGciOiJIUzIGNh"
+             }
              </remarks>
              <param name="userDto">Object containing Login and Password</param>
              <returns></returns>
