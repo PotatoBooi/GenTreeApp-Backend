@@ -39,7 +39,7 @@ namespace GenTreeApp.API.Controllers
         [HttpGet("{id}",Name = "GetPerson")]
         public async Task<ActionResult<PersonDto>> GetPersonById(Guid id)
         {
-            var person = await _ctx.Persons.Where(p => p.Id == id)
+            var person = await _ctx.Persons.Where(p=>p.Id == id)
                 .Include(d => d.Details)
                 .ThenInclude(e => e.Events)
                 .Include(d => d.Details)
@@ -47,7 +47,8 @@ namespace GenTreeApp.API.Controllers
                 .Include(d => d.Details)
                 .ThenInclude(c => c.Comments)
                 .Include(r => r.Relations1)
-                .Include(r => r.Relations2).FirstAsync();
+                .Include(r => r.Relations2)
+                .Where(p=>p.Id == id).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
@@ -66,7 +67,7 @@ namespace GenTreeApp.API.Controllers
         {
             var person = await _ctx.Persons.Where(p => p.Id == id)
                 .Include(d => d.Details)
-                .ThenInclude(m => m.Media).FirstAsync();
+                .ThenInclude(m => m.Media).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
@@ -86,7 +87,7 @@ namespace GenTreeApp.API.Controllers
         {
             var person = await _ctx.Persons.Where(p => p.Id == id)
                 .Include(d => d.Details)
-                .ThenInclude(m => m.Media).FirstAsync();
+                .ThenInclude(m => m.Media).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
@@ -106,7 +107,7 @@ namespace GenTreeApp.API.Controllers
         {
             var person = await _ctx.Persons.Where(p => p.Id == id)
                 .Include(d => d.Details)
-                .ThenInclude(e => e.Events).FirstAsync();
+                .ThenInclude(e => e.Events).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
@@ -126,7 +127,7 @@ namespace GenTreeApp.API.Controllers
         {
             var person = await _ctx.Persons.Where(p => p.Id == id)
                 .Include(d => d.Details)
-                .ThenInclude(c => c.Comments).FirstAsync();
+                .ThenInclude(c => c.Comments).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
@@ -201,7 +202,7 @@ namespace GenTreeApp.API.Controllers
         [HttpPost("{id}/events")]
         public async Task<ActionResult> AddEventToPerson(Guid id,[FromBody] EventCreationDto eventCreation)
         {
-            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).FirstAsync();
+            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
@@ -256,7 +257,7 @@ namespace GenTreeApp.API.Controllers
         public async Task<ActionResult> AddMediaToPerson(Guid id, [FromBody] MediaCreationDto media)
         {
             //todo change this after media upload is implemented
-            var person = await _ctx.Persons.Where(p=>p.Id == id).Include(d=>d.Details).FirstAsync();
+            var person = await _ctx.Persons.Where(p=>p.Id == id).Include(d=>d.Details).SingleOrDefaultAsync();
             var mediaToAdd = await _ctx.Media.FindAsync(media.MediaId);
             if (person == null || mediaToAdd == null)
             {
@@ -283,7 +284,7 @@ namespace GenTreeApp.API.Controllers
         public async Task<ActionResult> SetPersonAvatar(Guid id,Guid mediaId)
         {
             //todo change this after media upload is implemented
-            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).FirstAsync();
+            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).SingleOrDefaultAsync();
             var mediaToAdd = await _ctx.Media.FindAsync(mediaId);
             if (person == null || mediaToAdd == null)
             {
@@ -358,7 +359,7 @@ namespace GenTreeApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdatePerson(Guid id,[FromBody] PersonCreationDto personUpdated)
         {
-            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).FirstAsync();
+            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();

@@ -164,15 +164,16 @@
             <summary>
             Gets list of all persons in tree
             </summary>
-            <param name="id"></param>
+            <param name="id">Id of Tree</param>
             <returns>List of persons</returns>
         </member>
         <member name="M:GenTreeApp.API.Controllers.TreesController.AddPersonToTree(System.Guid,GenTreeApp.API.DTOs.Person.PersonCreationDto)">
             <summary>
-            Adds Person to specified Tree
+            Adds Person to specified Tree and returns its Id 
+            
             </summary>
             <param name="id">Id of Tree</param>
-            <param name="person">Id of Person</param>
+            <param name="person">Person object for creation</param>
             <returns></returns>
         </member>
         <member name="M:GenTreeApp.API.Controllers.TreesController.AddTree(GenTreeApp.API.DTOs.Tree.TreeCreationDto)">

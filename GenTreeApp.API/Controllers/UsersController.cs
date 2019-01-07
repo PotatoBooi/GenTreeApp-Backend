@@ -145,7 +145,7 @@ namespace GenTreeApp.API.Controllers
             }
             var currentAvatar = await _ctx.Media.Include(d => d.User)
                 .Where(d => (d.User.Id == user.AvatarId) && (d.Type == MediaType.Avatar))
-                .FirstAsync();
+                .SingleOrDefaultAsync();
 
             if (currentAvatar != null)
             {

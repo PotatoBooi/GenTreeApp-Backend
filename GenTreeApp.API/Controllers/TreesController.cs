@@ -124,7 +124,7 @@ namespace GenTreeApp.API.Controllers
         /// <summary>
         /// Gets list of all persons in tree
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Id of Tree</param>
         /// <returns>List of persons</returns>
         [HttpGet("{id}/persons",Name="GetPersonsForTree")]
         public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersonsForTree(Guid id)
@@ -145,15 +145,16 @@ namespace GenTreeApp.API.Controllers
         }
 
         /// <summary>
-        /// Adds Person to specified Tree
+        /// Adds Person to specified Tree and returns its Id 
+        /// 
         /// </summary>
         /// <param name="id">Id of Tree</param>
-        /// <param name="person">Id of Person</param>
+        /// <param name="person">Person object for creation</param>
         /// <returns></returns>
         [HttpPost("{id}/persons")]
         public async Task<ActionResult> AddPersonToTree(Guid id,[FromBody] PersonCreationDto person)
         {
-            var tree = _ctx.Trees.FindAsync(id);
+            var tree = await _ctx.Trees.FindAsync(id);
             if (tree == null)
             {
                 return BadRequest();
@@ -165,7 +166,7 @@ namespace GenTreeApp.API.Controllers
             }
 
             var mappedPerson = _mapper.Map<Person>(person);
-            mappedPerson.Tree.Id = tree.Result.Id;
+            mappedPerson.Tree = tree;
             await _ctx.Persons.AddAsync(mappedPerson);
             await _ctx.SaveChangesAsync();
             var creationResult = _mapper.Map<PersonDto>(mappedPerson);
