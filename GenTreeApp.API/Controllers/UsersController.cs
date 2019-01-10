@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using GenTreeApp.API.DTOs.Media;
 using GenTreeApp.API.DTOs.Users;
 using GenTreeApp.API.DTOs.Users.Login;
 using GenTreeApp.API.DTOs.Users.Register;
@@ -30,12 +33,14 @@ namespace GenTreeApp.API.Controllers
         private IUserService _userService;
         private readonly AppSettings _appSettings;
         private readonly TreeDbContext _ctx;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserService userService, IOptions<AppSettings> appSettings,TreeDbContext ctx)
+        public UsersController(IUserService userService, IOptions<AppSettings> appSettings,TreeDbContext ctx,IMapper mapper)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
             _ctx = ctx;
+            _mapper = mapper;
         }
 
 
@@ -158,6 +163,24 @@ namespace GenTreeApp.API.Controllers
             _ctx.Media.Update(media);
             await _ctx.SaveChangesAsync();
             return Ok(new {mediaId = media.Id});
+        }
+        /// <summary>
+        /// Returns users avatar
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <returns></returns>
+        [HttpGet("{id}/avatar")]
+        public async Task<ActionResult<MediaDto>> GetUserAvatar(Guid id)
+        {
+            var user = await _ctx.Users.Where(u=>u.Id==id).Include(a=>a.Avatar).SingleOrDefaultAsync();
+                
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var avatar = _mapper.Map<MediaDto>(user.Avatar);
+            return Ok(avatar);
         }
 
     }

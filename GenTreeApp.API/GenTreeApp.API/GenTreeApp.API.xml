@@ -245,5 +245,12 @@
             <param name="request">Contains Id of User and Id of Media</param>
             <returns></returns>
         </member>
+        <member name="M:GenTreeApp.API.Controllers.UsersController.GetUserAvatar(System.Guid)">
+            <summary>
+            Returns users avatar
+            </summary>
+            <param name="id">User Id</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
