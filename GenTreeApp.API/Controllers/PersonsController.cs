@@ -184,7 +184,7 @@ namespace GenTreeApp.API.Controllers
             await _ctx.SaveChangesAsync();
             var personReturned = _mapper.Map<PersonDto>(mappedPerson);
 
-            return CreatedAtRoute("GetPerson", new {Id = personReturned.Id},personReturned);
+            return Ok(new {Id = personReturned.Id});
 
         }
         /// <summary>
@@ -196,7 +196,7 @@ namespace GenTreeApp.API.Controllers
         /// -Wedding
         /// -Divorce
         /// </remarks>
-        /// <param name="id">If of Person</param>
+        /// <param name="id">Id of Person</param>
         /// <param name="eventCreation">Object for creating an Event</param>
         /// <returns></returns>
         [HttpPost("{id}/events")]
@@ -218,7 +218,7 @@ namespace GenTreeApp.API.Controllers
             newEvent.Details = person.Details;
             await _ctx.Events.AddAsync(newEvent);
             await _ctx.SaveChangesAsync();
-            return CreatedAtRoute("GetPersonEvents", new {Id = newEvent.Id});
+            return Ok(new {Id = newEvent.Id});
         }
         /// <summary>
         /// Adds comment to specified Person
@@ -245,7 +245,7 @@ namespace GenTreeApp.API.Controllers
             newComment.Details = person.Details;
             await _ctx.Comments.AddAsync(newComment);
             await _ctx.SaveChangesAsync();
-            return CreatedAtRoute("GetPersonComments", new { Id = newComment.Id });
+            return Ok( new { Id = newComment.Id });
         }
         /// <summary>
         /// Adds picture or video to person
@@ -334,18 +334,10 @@ namespace GenTreeApp.API.Controllers
                 return NotFound();
             }
             var relationToSend = _mapper.Map<Relation>(relation);
-
-
-            //            var relation = new RelationCreationDto
-            //            {
-            //                FirstPersonId = personId,
-            //                SecondPersonId = secondPersonId
-            //            };
-            //            var relationToSend = _mapper.Map<Relation>(relation);
             await _ctx.AddAsync(relationToSend);
             await _ctx.SaveChangesAsync();
 
-            return CreatedAtRoute("GetRelations", new {Id = relationToSend.Id});
+            return Ok(new {Id = relationToSend.Id});
         }
         /// <summary>
         /// Updates person 

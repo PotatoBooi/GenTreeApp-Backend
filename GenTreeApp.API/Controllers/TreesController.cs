@@ -73,21 +73,6 @@ namespace GenTreeApp.API.Controllers
                 .FirstAsync();
 
             var mappedTree = _mapper.Map<TreeGetDto>(tree);
-            
-//            foreach (var treePerson in tree.Persons)
-//            {
-//                List<RelationDto> joinedRelation = new List<RelationDto>();
-//                foreach (var relation in treePerson.Relations1)
-//                {
-//                    joinedRelation.Add(_mapper.Map<RelationDto>(relation));
-//                }
-//                foreach (var relation in treePerson.Relations2)
-//                {
-//                    joinedRelation.Add(_mapper.Map<RelationDto>(relation));
-//                }
-//
-//                
-//            }
            
             return Ok(mappedTree);
         }
@@ -103,20 +88,6 @@ namespace GenTreeApp.API.Controllers
 
             var mappedTree = _mapper.Map<List<TreeGetDto>>(tree);
 
-            //            foreach (var treePerson in tree.Persons)
-            //            {
-            //                List<RelationDto> joinedRelation = new List<RelationDto>();
-            //                foreach (var relation in treePerson.Relations1)
-            //                {
-            //                    joinedRelation.Add(_mapper.Map<RelationDto>(relation));
-            //                }
-            //                foreach (var relation in treePerson.Relations2)
-            //                {
-            //                    joinedRelation.Add(_mapper.Map<RelationDto>(relation));
-            //                }
-            //
-            //                
-            //            }
 
             return Ok(mappedTree);
         }
@@ -170,7 +141,7 @@ namespace GenTreeApp.API.Controllers
             await _ctx.Persons.AddAsync(mappedPerson);
             await _ctx.SaveChangesAsync();
             var creationResult = _mapper.Map<PersonDto>(mappedPerson);
-            return CreatedAtRoute("GetPersonsForTree", new {Id = creationResult.Id});
+            return Ok( new {Id = creationResult.Id});
 
         }
         /// <summary>
@@ -189,24 +160,8 @@ namespace GenTreeApp.API.Controllers
             var addTree = _mapper.Map<Tree>(tree);
             await _ctx.Trees.AddAsync(addTree);
             await _ctx.SaveChangesAsync();
-
-            return CreatedAtRoute("GetTree", new {treeId = addTree.Id});
-//            var addTree = new Tree();
-//            var addPersons = new List<Person>();
-//            foreach (var personCreation in tree.Persons)
-//            {
-//                addPersons.Add(new Person
-//                {
-//                    Details = new Details
-//                {
-//                        Name = personCreation.Name,
-//                        Surname = personCreation.Surname,
-//                        Sex = (personCreation.Sex.ToLower()=="male")?Sex.Male : Sex.Female,
-//                        
-//                },
-//
-//                });
-//            }
+            var newTree = _mapper.Map<TreeGetDto>(addTree);
+            return Ok(new {id = addTree.Id});
 
         }
         /// <summary>
