@@ -6,8 +6,6 @@ namespace GenTreeApp.Domain.Entities
 {
     public class Relation
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
         public RelationType Type { get; set; }
         public Guid PersonId { get; set; }
         public Person Person { get; set; }

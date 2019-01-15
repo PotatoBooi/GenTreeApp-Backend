@@ -88,7 +88,7 @@
             -Wedding
             -Divorce
             </remarks>
-            <param name="id">If of Person</param>
+            <param name="id">Id of Person</param>
             <param name="eventCreation">Object for creating an Event</param>
             <returns></returns>
         </member>

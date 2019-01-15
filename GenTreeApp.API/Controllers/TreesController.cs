@@ -114,6 +114,96 @@ namespace GenTreeApp.API.Controllers
             var mapped = _mapper.Map<List<PersonDto>>(persons);
             return Ok(mapped);
         }
+        /// <summary>
+        /// Returns Persons from oldest to youngest
+        /// </summary>
+        /// <param name="id">Tree Id</param>
+        /// <returns></returns>
+        [HttpGet("{id}/persons/oldest", Name = "GetOldestPersons")]
+        public async Task<ActionResult<IEnumerable<PersonDto>>> GetOldestPersonsForTree(Guid id)
+        {
+
+            var persons = await _ctx.Persons.Where(t => (t.Tree.Id == id))
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Events)
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Comments)
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Media)
+                .Include(r => r.Relations1)
+                .Include(r => r.Relations2)
+                .ToListAsync();
+            var filter = new List<Person>();
+            var events = new List<Event>();
+            foreach (var p in persons)
+            {
+                events.AddRange(p.Details.Events.Where(e=>e.Type == EventType.Birth));
+            }
+
+            events = events.OrderBy(e => e.Date).ToList();
+            
+                foreach (var e in events)
+                {
+                    foreach (var p in persons)
+                    {
+                        if(p.Details==e.Details) filter.Add(p);
+                    }
+                    
+                }
+            
+
+            if (!filter.Any())
+            {
+                return NotFound();
+            }
+            var mapped = _mapper.Map<List<PersonDto>>(filter);
+            return Ok(mapped);
+        }
+        /// <summary>
+        /// Returns Persons from youngest to oldest
+        /// </summary>
+        /// <param name="id">Tree Id</param>
+        /// <returns></returns>
+        [HttpGet("{id}/persons/youngest", Name = "GetYoungestPersons")]
+        public async Task<ActionResult<IEnumerable<PersonDto>>> GetYoungestPersonsForTree(Guid id)
+        {
+
+            var persons = await _ctx.Persons.Where(t => (t.Tree.Id == id))
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Events)
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Comments)
+                .Include(d => d.Details)
+                .ThenInclude(e => e.Media)
+                .Include(r => r.Relations1)
+                .Include(r => r.Relations2)
+                .ToListAsync();
+            var filter = new List<Person>();
+            var events = new List<Event>();
+            foreach (var p in persons)
+            {
+                events.AddRange(p.Details.Events.Where(e => e.Type == EventType.Birth));
+            }
+
+            events = events.OrderByDescending(e => e.Date).ToList();
+
+            foreach (var e in events)
+            {
+                foreach (var p in persons)
+                {
+                    if (p.Details == e.Details) filter.Add(p);
+                }
+
+            }
+
+
+            if (!filter.Any())
+            {
+                return NotFound();
+            }
+            var mapped = _mapper.Map<List<PersonDto>>(filter);
+            return Ok(mapped);
+        }
 
         /// <summary>
         /// Adds Person to specified Tree and returns its Id 

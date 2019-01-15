@@ -337,7 +337,7 @@ namespace GenTreeApp.API.Controllers
             await _ctx.AddAsync(relationToSend);
             await _ctx.SaveChangesAsync();
 
-            return Ok(new {Id = relationToSend.Id});
+            return Ok();
         }
         /// <summary>
         /// Updates person 

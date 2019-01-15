@@ -25,7 +25,9 @@ namespace GenTreeApp.API.Helpers.Mappings
 
             CreateMap<PersonCreationDto, Person>()
                 .ForPath(dest => dest.Details.Name, opt => opt.MapFrom(src => src.Name))
-                .ForPath(dest => dest.Details.Surname, opt => opt.MapFrom(src => src.Surname)); // add enum resolver 
+                .ForPath(dest => dest.Details.Surname, opt => opt.MapFrom(src => src.Surname))
+                .ForPath(dest => dest.Details.Sex, opt => opt.MapFrom(src => src.Sex))
+                .ForPath(dest=>dest.Details.Events, opt=>opt.MapFrom(src=>src.Events)); // add enum resolver 
 
             CreateMap<Sex,string>()
                 .ConvertUsing(src=>src.ToString());
