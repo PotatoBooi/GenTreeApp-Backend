@@ -167,6 +167,20 @@
             <param name="id">Id of Tree</param>
             <returns>List of persons</returns>
         </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.GetOldestPersonsForTree(System.Guid)">
+            <summary>
+            Returns Persons from oldest to youngest
+            </summary>
+            <param name="id">Tree Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:GenTreeApp.API.Controllers.TreesController.GetYoungestPersonsForTree(System.Guid)">
+            <summary>
+            Returns Persons from youngest to oldest
+            </summary>
+            <param name="id">Tree Id</param>
+            <returns></returns>
+        </member>
         <member name="M:GenTreeApp.API.Controllers.TreesController.AddPersonToTree(System.Guid,GenTreeApp.API.DTOs.Person.PersonCreationDto)">
             <summary>
             Adds Person to specified Tree and returns its Id 

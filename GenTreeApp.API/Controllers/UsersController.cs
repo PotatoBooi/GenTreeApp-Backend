@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
@@ -182,6 +183,22 @@ namespace GenTreeApp.API.Controllers
             var avatar = _mapper.Map<MediaDto>(user.Avatar);
             return Ok(avatar);
         }
+        [HttpGet("{id}/avatar/file")]
+        public async Task<ActionResult<FileStreamResult>> GetUserAvatarFile(Guid id)
+        {
+            var user = await _ctx.Users.Where(u => u.Id == id).Include(a => a.Avatar).SingleOrDefaultAsync();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            byte[] fileBytes = Convert.FromBase64String(user.Avatar.Content);
+            MemoryStream ms = new MemoryStream(fileBytes);
+            
+            return Ok(new FileStreamResult(ms,"image/png"));
+        }
+
 
     }
 }
