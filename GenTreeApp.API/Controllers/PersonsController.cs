@@ -97,6 +97,21 @@ namespace GenTreeApp.API.Controllers
             return Ok(_mapper.Map<List<MediaDto>>(media));
 
         }
+        [HttpPost("{id}/media/avatar/file", Name = "GetPersonAvatarFile")]
+        public async Task<ActionResult<List<MediaDto>>> GetPersonAvatarFile(Guid id)
+        {
+            var person = await _ctx.Persons.Where(p => p.Id == id)
+                .Include(d => d.Details)
+                .ThenInclude(m => m.Media).SingleOrDefaultAsync();
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            var media = person.Details.Media.Where(t => t.Type == MediaType.Avatar);
+            return Ok(_mapper.Map<List<MediaDto>>(media));
+
+        }
         /// <summary>
         /// Returns list of Events related to Person
         /// </summary>
