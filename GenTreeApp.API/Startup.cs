@@ -23,6 +23,9 @@ using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using GenTreeApp.API.Helpers.Mappings;
 using Microsoft.Extensions.Logging.AzureAppServices;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace GenTreeApp.API
@@ -40,7 +43,11 @@ namespace GenTreeApp.API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Configuration.GetConnectionString("AzureStorageConnectionString-1"));
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference("media");
 
+            services.AddSingleton(blobContainer);
             services.AddCors();
 
             services.AddSwaggerGen(c =>
@@ -60,13 +67,14 @@ namespace GenTreeApp.API
             );
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-
+            
             services.AddDbContext<GenTreeApp.API.Persistence.TreeDbContext>(options => 
             options
                // .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("AzureConnection"))
-               
+                .UseSqlServer(Configuration.GetConnectionString("AzureConnection"))//"AzureConnection"
+
             );
+            
 
             
             //IdentityModelEventSource.ShowPII = true;

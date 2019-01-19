@@ -183,20 +183,7 @@ namespace GenTreeApp.API.Controllers
             var avatar = _mapper.Map<MediaDto>(user.Avatar);
             return Ok(avatar);
         }
-        [HttpPost("{id}/avatar/file")]
-        public async Task<ActionResult<MediaDto>> GetUserAvatarFile(Guid id)
-        {
-            var user = await _ctx.Users.Where(u => u.Id == id).Include(a => a.Avatar).SingleOrDefaultAsync();
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            var avatar = _mapper.Map<MediaDto>(user.Avatar);
-            return Ok(avatar);
-        }
-
+      
 
     }
 }

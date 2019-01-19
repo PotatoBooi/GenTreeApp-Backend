@@ -11,7 +11,7 @@ namespace GenTreeApp.Domain.Entities
         public string Name { get; set; }
         public MediaType Type { get; set; }
 
-        public string Content { get; set; }
+        public string Url { get; set; }
         //navigation property
         public Details Details { get; set; }
         //navigation to avatar owner
