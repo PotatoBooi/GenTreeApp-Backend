@@ -16,12 +16,14 @@ namespace GenTreeApp.Domain.Entities
 
     public enum RelationType
     {
+        [DisplayName("Parent")]
+        Parent,
         [DisplayName("Child")]
         Child,
-        [DisplayName("Marriage")]
-        Marriage,
         [DisplayName("Sibling")]
-        Sibling
-
+        Sibling,
+        [DisplayName("Marriage")]
+        Marriage
+       
     }
 }

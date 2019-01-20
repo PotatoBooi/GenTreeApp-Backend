@@ -320,7 +320,7 @@ namespace GenTreeApp.API.Controllers
         /// <summary>
         /// Adds Relation to person
         /// </summary>
-        /// <remarks>Relation types: Child, Marriage, Sibling</remarks>
+        /// <remarks>Relation types: Parent,Child, Marriage, Sibling</remarks>
         /// <param name="relation">Object which contains id of 2 Persons to create Relation</param>
         /// <returns></returns>
         [HttpPost("relations")]
