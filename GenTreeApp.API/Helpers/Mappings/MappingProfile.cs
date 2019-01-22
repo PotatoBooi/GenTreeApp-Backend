@@ -59,12 +59,33 @@ namespace GenTreeApp.API.Helpers.Mappings
 
         private List<Relation> mergeLists(Person person)
         {
+
+
             var list1 = person.Relations1.ToList();
             var list2 = person.Relations2.ToList();
             List<Relation> merged = new List<Relation>();
+
+            
             merged.AddRange(list1);
             merged.AddRange(list2);
-            return merged;
+            var relations = new List<Relation>();
+            foreach (var relation in merged)
+            {
+                if (relation.Type == RelationType.Parent && relation.PersonId == person.Id)
+                {
+                    relations.Add(relation);
+                }
+
+                if (relation.Type == RelationType.Child && relation.PersonId == person.Id)
+                {
+                    relations.Add(relation);
+                }
+                if (relation.Type == RelationType.Marriage || relation.Type == RelationType.Sibling)
+                {
+                    relations.Add(relation);
+                }
+            }
+            return relations;
         }
     }
 }

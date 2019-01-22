@@ -47,7 +47,9 @@ namespace GenTreeApp.API.Controllers
                 .Include(d => d.Details)
                 .ThenInclude(c => c.Comments)
                 .Include(r => r.Relations1)
+                .ThenInclude(s => s.SecondPerson)
                 .Include(r => r.Relations2)
+                .ThenInclude(s => s.Person)
                 .Where(p=>p.Id == id).SingleOrDefaultAsync();
             if (person == null)
             {
@@ -93,8 +95,13 @@ namespace GenTreeApp.API.Controllers
                 return NotFound();
             }
 
-            var media = person.Details.Media.Where(t=>t.Type == MediaType.Avatar);
-            return Ok(_mapper.Map<List<MediaDto>>(media));
+            var media = person.Details.Media.SingleOrDefault(t => t.Type == MediaType.Avatar);
+            if (media == null)
+            {
+                return NotFound();
+               
+            }
+            return Ok(_mapper.Map<MediaDto>(media));
 
         }
       
@@ -146,16 +153,20 @@ namespace GenTreeApp.API.Controllers
         [HttpGet("{id}/relations", Name = "GetPersonRelations")]
         public async Task<ActionResult<List<RelationDto>>> GetPersonRelations(Guid id)
         {
-            var person = await _ctx.Persons.FindAsync(id);
+            var person = await _ctx.Persons.Where(p => p.Id == id).Include(r => r.Relations1)
+                .ThenInclude(s=>s.SecondPerson)
+                .Include(r => r.Relations2)
+                .ThenInclude(r=>r.Person)
+                .SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
             }
-            var relations = await _ctx.Relations
-                .Where(p => (p.Person.Id == id) || (p.SecondPerson.Id == id))
-                .Include(p=>p.SecondPerson).ToListAsync();
 
-            return Ok(_mapper.Map<List<RelationDto>>(relations));
+            var mappedPerson = _mapper.Map<PersonDto>(person);
+            var relations = mappedPerson.Relations;
+
+            return Ok(relations);
         }
         /// <summary>
         /// Adds Person to specified Tree
@@ -299,9 +310,10 @@ namespace GenTreeApp.API.Controllers
             {
                 return BadRequest();
             }
+            
             var currentAvatar = await _ctx.Media.Include(d => d.Details)
                 .Where(d => (d.Details.Id == person.DetailsId) && (d.Type == MediaType.Avatar))
-                .FirstAsync();
+                .SingleOrDefaultAsync();
 
             if (currentAvatar != null)
             {
@@ -309,12 +321,13 @@ namespace GenTreeApp.API.Controllers
                 _ctx.Update(currentAvatar);
             }
 
+            mediaToAdd.Details = person.Details;
             mediaToAdd.Type = MediaType.Avatar;
             _ctx.Update(mediaToAdd);
 
 
             await _ctx.SaveChangesAsync();
-            return Ok($"Changed avatar for person with id {id}");
+            return Ok();
 
         }
         /// <summary>

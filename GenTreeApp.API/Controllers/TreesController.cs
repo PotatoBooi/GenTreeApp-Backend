@@ -111,7 +111,37 @@ namespace GenTreeApp.API.Controllers
                 .Include(r => r.Relations1)
                 .Include(r => r.Relations2)
                 .ToListAsync();
+            
             var mapped = _mapper.Map<List<PersonDto>>(persons);
+            foreach (var p in mapped)
+            {
+                if (!p.Relations.Any())
+                {
+                    mapped.Remove(p);
+                }
+            }
+//            foreach (var personDto in mapped)
+//            {
+//                var relations = new List<RelationDto>();
+//                foreach (var relation in personDto.Relations)
+//                {
+//                    if (relation.Type == RelationType.Parent.ToString() && relation.FirstPersonId == personDto.Id)
+//                    {
+//                        relations.Add(relation);
+//                    }
+//
+//                    if (relation.Type == RelationType.Child.ToString() && relation.FirstPersonId == personDto.Id)
+//                    {
+//                        relations.Add(relation);
+//                    }
+//                    if (relation.Type == RelationType.Marriage.ToString() || relation.Type == RelationType.Marriage.ToString())
+//                    {
+//                        relations.Add(relation);
+//                    }
+//                }
+//
+//                personDto.Relations = relations;
+//            }
             return Ok(mapped);
         }
         /// <summary>

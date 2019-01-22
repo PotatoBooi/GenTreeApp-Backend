@@ -53,7 +53,7 @@ namespace GenTreeApp.API.Controllers
         ///Returns Id of Media for later usage.
         /// </remarks>
         /// <returns>Id of created media</returns>
-        
+        [AllowAnonymous]
         [Consumes("multipart/form-data")]
         [HttpPost]
         public async Task<ActionResult<Guid>>Post([FromForm]  IFormFile file)
