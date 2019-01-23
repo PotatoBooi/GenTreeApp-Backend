@@ -241,7 +241,7 @@ namespace GenTreeApp.API.Controllers
         [HttpPost("{id}/comments")]
         public async Task<ActionResult> AddCommentToPerson(Guid id, [FromBody] CommentCreationDto comment)
         {
-            var person = await _ctx.Persons.FindAsync(id);
+            var person = await _ctx.Persons.Where(p => p.Id == id).Include(d => d.Details).SingleOrDefaultAsync();
             if (person == null)
             {
                 return NotFound();
@@ -268,7 +268,7 @@ namespace GenTreeApp.API.Controllers
         [HttpPost("{id}/media")]
         public async Task<ActionResult> AddMediaToPerson(Guid id, [FromBody] MediaCreationDto media)
         {
-            //todo change this after media upload is implemented
+        
             var person = await _ctx.Persons.Where(p=>p.Id == id).Include(d=>d.Details).SingleOrDefaultAsync();
             var mediaToAdd = await _ctx.Media.FindAsync(media.MediaId);
             if (person == null || mediaToAdd == null)
@@ -348,7 +348,29 @@ namespace GenTreeApp.API.Controllers
                 return NotFound();
             }
             var relationToSend = _mapper.Map<Relation>(relation);
+
+            if (relationToSend.Type == RelationType.Child)
+            {
+                var reverse = new Relation
+                {
+                    Person = secondPerson,
+                    SecondPerson = person,
+                    Type = RelationType.Parent
+                };
+                await _ctx.AddAsync(reverse);
+            }
+            else if (relationToSend.Type == RelationType.Parent)
+            {
+                var reverse = new Relation
+                {
+                    Person = secondPerson,
+                    SecondPerson = person,
+                    Type = RelationType.Child
+                };
+                await _ctx.AddAsync(reverse);
+            }
             await _ctx.AddAsync(relationToSend);
+           
             await _ctx.SaveChangesAsync();
 
             return Ok();

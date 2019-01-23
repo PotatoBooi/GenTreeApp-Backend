@@ -113,13 +113,23 @@ namespace GenTreeApp.API.Controllers
                 .ToListAsync();
             
             var mapped = _mapper.Map<List<PersonDto>>(persons);
+            var toRemove = new List<PersonDto>();
             foreach (var p in mapped)
             {
                 if (!p.Relations.Any())
                 {
-                    mapped.Remove(p);
+                    toRemove.Add(p);
                 }
             }
+
+            if (toRemove.Any())
+            {
+                foreach (var rem in toRemove)
+                {
+                    mapped.Remove(rem);
+                }
+            }
+
 //            foreach (var personDto in mapped)
 //            {
 //                var relations = new List<RelationDto>();
